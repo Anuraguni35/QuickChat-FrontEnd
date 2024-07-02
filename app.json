@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "frontEnd",
-    "slug": "frontEnd",
+    "name": "QuickChat",
+    "slug": "quickchat",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/WelcomeLogo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -18,10 +18,28 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.READ_CONTACTS",
+        "android.permission.WRITE_CONTACTS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Allow QuickChat to access your contacts."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e5c5f8ce-c377-40d7-8f4f-b047c6a06fc7"
+      }
     }
   }
 }
