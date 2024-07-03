@@ -19,8 +19,14 @@ import BlankPage from "./src/Pages/BlankPage";
 import SocketContextProvider from "./src/store/context/socket-context.js"
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import * as SecureStore from 'expo-secure-store';
+import { ipConfig } from "./Core/ipConfig";
+import axios from "axios";
+import Constants from "expo-constants";
 const Stack: any = createNativeStackNavigator();
 function AuthStack() {
+
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -60,7 +66,7 @@ function AuthenticatedStack() {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  
+   console.log()
   useEffect(() => {
     registerForPushNotificationsAsync().then((token:any) => setExpoPushToken(token));
   
@@ -142,6 +148,35 @@ function AuthenticatedStack() {
 function Navigation() {
   const authCtx: any = useContext(AuthContext);
 
+  useEffect(()=>{
+    CheckAuth()
+  },[])
+
+  const CheckAuth=async()=>{
+    const token=await SecureStore.getItemAsync('token');
+    if(token){
+      console.log(token);
+      try{
+        const res=await axios.get(`${ipConfig}/auth/validateUser`,{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        })
+
+        if(res.status===200){
+          authCtx.updateAuthentication(true);
+          authCtx.updateUserData(res.data.user);
+          authCtx.saveToken(token);
+        }
+      }catch(err){
+        console.log(err)
+        authCtx.updateAuthentication(false);
+        return;
+      }
+    }else{
+      authCtx.updateAuthentication(false);
+    }
+  }
   return (
     <NavigationContainer>
       {!authCtx.isAuthenticated && <AuthStack />}

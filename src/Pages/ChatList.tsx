@@ -13,7 +13,7 @@ import { AuthContext } from "../store/context/auth-context";
 import axios from "axios";
 import { ActivityIndicator, Avatar, Badge } from "react-native-paper";
 import { SocketContext } from "../store/context/socket-context";
- 
+import Icon from "react-native-vector-icons/AntDesign"
 const ChatList = ({ navigation }: any) => {
   const [userContect, setUserContect] = useState([]);
   const authCtx:any = useContext(AuthContext);
@@ -22,8 +22,9 @@ const ChatList = ({ navigation }: any) => {
   const socketCtx:any=useContext(SocketContext)
    
   const background_image_1 = require("../../assets/BackGround.jpg");
-    
+     
   useEffect(() => {
+     
     navigation.setOptions({
       headerTitle: "",
       tabBarVisible: false,
@@ -58,14 +59,14 @@ const ChatList = ({ navigation }: any) => {
             navigation.navigate("More");
           }}
         >
-          <Image
+           <Image
             style={{ height: 40, width: 40 }}
             source={{ uri: authCtx?.userData?.profilePic }}
-          />
+          /> 
         </Pressable>
       ),
     });
-  }, []);
+  }, [authCtx.userData]);
   useEffect(() => {
     (async () => {
       setIsloading(true);
@@ -177,7 +178,7 @@ const ChatList = ({ navigation }: any) => {
         resizeMode="cover"
       >
         {isLoading ? (
-          <ActivityIndicator size={50} color="#80c6ff" />
+          <ActivityIndicator size={50} style={{height:"90%"}} color="#80c6ff" />
         ) : (
           <FlatList data={userList} renderItem={renderItem} />
         )}
