@@ -1,1 +1,1 @@
-export const ipConfig="http://192.168.1.44:4000";
+export const ipConfig="https://quickchat-backend-xth5.onrender.com";
