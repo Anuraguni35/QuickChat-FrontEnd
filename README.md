@@ -23,6 +23,6 @@ A React Native chat application built using Expo, leveraging for backend service
 
 - [React Native](https://reactnative.dev/)
 - [Expo](https://expo.dev/)
-- [Socket.io] 
+- [Socket.io](https://socket.io/) 
 
  
